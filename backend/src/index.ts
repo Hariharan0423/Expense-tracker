@@ -4,6 +4,9 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.routes';
 import categoryRouter from './routes/category.routes';
 import incomeRouter from './routes/income.routes';
+import expenseRouter from './routes/expense.routes';
+import { expenseController } from './controllers/expense.controller';
+import { authenticate } from './middlewares/auth.middleware';
 
 // Load environment variables from .env
 dotenv.config();
@@ -28,6 +31,12 @@ app.get('/health', (req: Request, res: Response) => {
 app.use('/auth', authRouter);
 app.use('/categories', categoryRouter);
 app.use('/income', incomeRouter);
+app.use('/expenses', expenseRouter);
+
+// Balance / Dashboard endpoint
+app.get('/dashboard', authenticate, (req: Request, res: Response) => {
+  expenseController.getDashboard(req, res);
+});
 
 // Boot Server
 app.listen(PORT, () => {
