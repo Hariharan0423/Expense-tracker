@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.routes';
+import categoryRouter from './routes/category.routes';
+import incomeRouter from './routes/income.routes';
 
 // Load environment variables from .env
 dotenv.config();
@@ -22,8 +24,10 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// Authentication Routes
+// Mount Routes
 app.use('/auth', authRouter);
+app.use('/categories', categoryRouter);
+app.use('/income', incomeRouter);
 
 // Boot Server
 app.listen(PORT, () => {
