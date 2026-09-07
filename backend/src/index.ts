@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import authRouter from './routes/auth.routes';
 
 // Load environment variables from .env
 dotenv.config();
@@ -20,6 +21,9 @@ app.get('/health', (req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Authentication Routes
+app.use('/auth', authRouter);
 
 // Boot Server
 app.listen(PORT, () => {
